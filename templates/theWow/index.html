@@ -1,0 +1,17 @@
+{% extends 'defaultLayout.html' %} 
+{% load static %}
+
+{% block title %}
+    Объявления
+{% endblock title %}
+
+
+{% block abracadabra %}
+    {% for adv in object_list %}
+        <div>
+            <h2><a href="{% url 'wow_adv:advert-detail' adv.id %}" >{{ adv.title }}</a></h2>
+            <p>{{ adv.body }}</p>
+            <p>{{ adv.author }}</p>
+        </div>
+    {% endfor %}
+{% endblock abracadabra %}

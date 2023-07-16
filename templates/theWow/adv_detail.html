@@ -1,0 +1,18 @@
+{% extends 'defaultLayout.html' %} 
+{% load static %}
+
+{% block title %}
+    Объявление
+{% endblock title %}
+
+
+{% block abracadabra %}
+   <h1> {{ adv.title }}</h1>
+   <small>
+    By: {{ adv.author.first_name }} {{ adv.author.last_name }}
+   </small>
+   <p>
+   {{ adv.body }}
+   </p>
+   <a href="{% url 'wow_adv:home' %}">Назад</a>
+{% endblock abracadabra %}
