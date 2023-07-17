@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+from decouple import config,Csv,RepositoryEnv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +28,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # need for allauth
 
+    #########
+    # 3rd party apps
+    #########
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... здесь нужно указать провайдеры, которые планируете использовать
+    'allauth.socialaccount.providers.google',
+
+    #########
+    # User apps
+    #########
     'theWowAdv',
 ]
 
@@ -51,10 +66,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
             ],
         },
     },
@@ -66,13 +81,23 @@ WSGI_APPLICATION = 'aWowAdv.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'wow_adv',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -91,6 +116,35 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+LOGIN_URL = '/accounts/login/'
+
+AUTHENTICATION_BACKENDS = [
+   # Needed to login by username in Django admin, regardless of `allauth`
+   'django.contrib.auth.backends.ModelBackend',
+  
+   # `allauth` specific authentication methods, such as login by e-mail
+   'allauth.account.auth_backends.AuthenticationBackend',
+]
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_SESSION_REMEMBER = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int) # порт smtp сервера тоже одинаковый
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default='') # ваше имя пользователя, например если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default='') # пароль от почты
+EMAIL_USE_SSL = True # Яндекс использует ssl, подробнее о том, что это, почитайте на Википедии, но включать его здесь обязательно
+DEFAULT_FROM_EMAIL =  config("DEFAULT_FROM_EMAIL") #EMAIL_HOST_USER
 
 
 # Internationalization
