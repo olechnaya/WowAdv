@@ -5,13 +5,19 @@
     Объявления
 {% endblock title %}
 
-
+{% comment %} TODO: вывести текущую дату, пагинацию {% endcomment %}
 {% block abracadabra %}
+    <a href="{% url 'wow_adv:create_adv' %}" class="btn btn-success">
+        Добавить объявление</a>  
     {% for adv in object_list %}
         <div>
-            <h2><a href="{% url 'wow_adv:advert-detail' adv.id %}" >{{ adv.title }}</a></h2>
+            <h2><a href="{% url 'wow_adv:adv-detail' adv.id %}" >{{ adv.title }}</a></h2>
             <p>{{ adv.body }}</p>
             <p>{{ adv.author }}</p>
+             <a href="{% url 'wow_adv:edit_adv' adv.id %}" class="btn btn-outline-primary btn-sm">                
+                Редактировать</a>
+            <a href="{% url 'wow_adv:remove_adv' adv.id %}" class="btn btn-outline-danger btn-sm">
+                Удалить</a>
         </div>
     {% endfor %}
 {% endblock abracadabra %}

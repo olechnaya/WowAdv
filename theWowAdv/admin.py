@@ -7,7 +7,7 @@ from .models import Advertisement, Response
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
-    fields = ('title', 'category','author',)
+    fields = ('title', 'category','author','body')
     list_display = ('title', 'category','author', )
 
 

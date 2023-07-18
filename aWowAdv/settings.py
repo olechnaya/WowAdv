@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+from django.conf.global_settings import DATETIME_INPUT_FORMATS
+
 from decouple import config,Csv,RepositoryEnv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,12 +39,16 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # ... здесь нужно указать провайдеры, которые планируете использовать
-    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.google',
+    "django_bootstrap5",
+    "bootstrap_datepicker_plus",
+    'django_ckeditor_5',
 
     #########
     # User apps
     #########
     'theWowAdv',
+    'members'
 ]
 
 MIDDLEWARE = [
@@ -118,7 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_URL = '/accounts/login/'
+# LOGIN_URL = '/accounts/login/'
+# LOGIN_REDIRECT_URL = '/thanks/'
 
 AUTHENTICATION_BACKENDS = [
    # Needed to login by username in Django admin, regardless of `allauth`
@@ -138,6 +145,7 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+# ACCOUNT_ADAPTER = 'members.allauth.AccountAdapter'
 
 EMAIL_HOST = config('EMAIL_HOST', default='localhost')  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int) # порт smtp сервера тоже одинаковый
@@ -173,3 +181,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload','Html5video' ],
+
+    },
+   
+}

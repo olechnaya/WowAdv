@@ -1,0 +1,32 @@
+{% extends 'defaultLayout.html' %} 
+
+{% block title %}
+Создаем Объявление
+{% endblock title %}
+{% block abracadabra %}
+
+{% comment %} {% if isUpdateView  %}
+        <h1>Редактировать Объявление</h1>
+    {% else %}
+        <h1>Добавить Объявление</h1>
+{% endif %} {% endcomment %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{{ form.media }}
+<form method="POST">
+    {% csrf_token %}
+    <div class="col-6 mb-3">     
+        {% comment %} {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка --> {% endcomment %}
+       {% bootstrap_form form %}
+    </div>
+    {% if isUpdateView  %}
+        <input type="submit" value="Сохранить изменения" class="btn btn-primary">
+        {% else %}
+        <input type="submit" value="Добавляем" class="btn btn-primary">
+    {% endif %}
+</form>
+
+
+
+{% endblock abracadabra %}
