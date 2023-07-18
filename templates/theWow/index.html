@@ -11,9 +11,11 @@
         Добавить объявление</a>  
     {% for adv in object_list %}
         <div>
-            <h2><a href="{% url 'wow_adv:adv-detail' adv.id %}" >{{ adv.title }}</a></h2>
+            <h2><a href="{% url 'wow_adv:adv_detail' adv.id %}" >{{ adv.title }}</a></h2>
             <p>{{ adv.body }}</p>
-            <p>{{ adv.author }}</p>
+            <p>Автор: {{ adv.author }}</p>
+            <p>Категория: {{ adv.get_category_display }}</p>
+            <p>Откликов: {{ adv.responses.count}}</p>
              <a href="{% url 'wow_adv:edit_adv' adv.id %}" class="btn btn-outline-primary btn-sm">                
                 Редактировать</a>
             <a href="{% url 'wow_adv:remove_adv' adv.id %}" class="btn btn-outline-danger btn-sm">

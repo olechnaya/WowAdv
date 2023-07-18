@@ -18,7 +18,8 @@
     {% csrf_token %}
     <div class="col-6 mb-3">     
         {% comment %} {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка --> {% endcomment %}
-       {% bootstrap_form form %}
+       {% comment %} {% bootstrap_form form %} {% endcomment %}
+       {{ form }}
     </div>
     {% if isUpdateView  %}
         <input type="submit" value="Сохранить изменения" class="btn btn-primary">

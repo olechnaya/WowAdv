@@ -13,5 +13,5 @@ class AdvertisementAdmin(admin.ModelAdmin):
 
 @admin.register(Response)
 class ResponseAdmin(admin.ModelAdmin):
-    fields = ('responseAdvertisement', 'responseUser', 'text','approved',)
-    list_display = ('responseAdvertisement','responseUser', 'text','approved',)
+    fields = ('advert', 'responseUser', 'title', 'text','approved',)
+    list_display = ('advert','responseUser', 'title', 'text','approved',)

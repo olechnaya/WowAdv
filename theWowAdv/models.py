@@ -22,7 +22,7 @@ class Advertisement(models.Model):
     title = models.CharField('Заголовок',max_length=255)
     category = models.CharField(verbose_name='Категория', max_length=3, choices=CATEGORIES, default='T')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель', related_name='advert', null=True)
-    body = CKEditor5Field('Содержание', blank=True, null=True)
+    body = CKEditor5Field('Содержание', blank=True, null=True,  config_name='extends')
     # body = models.TextField('Содержание',max_length=1024)
     pub_date = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Дата создания')
     exp_date = models.DateTimeField('Актуально до', null=True, blank=True)
@@ -36,7 +36,7 @@ class Advertisement(models.Model):
     def get_absolute_url(self):
         return f'/advert/{self.id}'
         # не получается работать
-        #  return reverse('adv-detail', args=(str(self.id)))
+        #  return reverse('adv_detail', args=(str(self.id)))
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
@@ -47,10 +47,11 @@ class Response(models.Model):
     class Meta:
         verbose_name = 'Отклик'
         verbose_name_plural = 'Отклики'
-    responseAdvertisement = models.ForeignKey(Advertisement, on_delete=models.CASCADE)
+    advert = models.ForeignKey(Advertisement, related_name="responses", on_delete=models.CASCADE)
     responseUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    approved = models.BooleanField('Принято', False)
-    text = models.TextField(max_length=512)
+    approved = models.BooleanField('Принято', default=False)
+    title = models.CharField('Заголовок', max_length=255, default="", blank=True)
+    text = models.TextField('Сообщение', max_length=512)
     dateCreation = models.DateTimeField(auto_now_add=True)
 
     # как добраться до промежуточных моделей
@@ -58,6 +59,6 @@ class Response(models.Model):
 
     def __str__(self): 
         try:
-            return self.commentPost.author.name.userName
+            return '%s - %s' % (self.advert.title, self.title)
         except:
-            return self.commentUser.username
+            return self.title

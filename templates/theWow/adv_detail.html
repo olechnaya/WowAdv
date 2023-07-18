@@ -7,6 +7,7 @@
 
 
 {% block abracadabra %}
+   <a href="{% url 'wow_adv:home' %}">Назад</a>
    <h1> {{ adv.title }}</h1>
    <small>
     Автор: {{ adv.author.first_name }} {{ adv.author.last_name }}
@@ -14,5 +15,18 @@
    <p>
    {{ adv.body|safe }}
    </p>
-   <a href="{% url 'wow_adv:home' %}">Назад</a>
+
+   <h2>Отклики</h2>
+   {% if not adv.responses.all %}
+        Откликов на объявление еще нет
+        <a href="{% url 'wow_adv:create_response' adv.pk %}">Можете откликнуться</a>
+    {% else %}
+        <a href="{% url 'wow_adv:create_response' adv.pk %}">Откликнуться</a>
+        {% for response in adv.responses.all %}
+            <strong>{{ response.title }}</strong>
+            <strong>{{ response.dateCreation }}</strong>
+            <p>{{ response.text }}</p>
+            <p>Автор отклика: <small>{{ response.responseUser }}</small></p>
+        {% endfor %}
+   {% endif %}
 {% endblock abracadabra %}

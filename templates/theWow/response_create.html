@@ -1,0 +1,19 @@
+{% extends 'defaultLayout.html' %} 
+
+{% block title %}
+Создаем Отклик
+{% endblock title %}
+{% block abracadabra %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="col-6 mb-3">     
+      {{ form.as_p }}
+       <button type="submit" class="btn btn-primary">Откликнуться</button>
+    </div>
+   
+</form>
+
+
+
+{% endblock abracadabra %}

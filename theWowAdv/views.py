@@ -1,7 +1,10 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.views.generic import\
      ListView,\
      DetailView,\
@@ -11,9 +14,10 @@ from django.views.generic import\
 
 
 from theWowAdv.models import *
-from theWowAdv.forms import AdvertisementForm
+from theWowAdv.forms import AdvertisementForm, ResponseForm
 from django.conf import settings
-from django.urls import reverse_lazy
+
+
 
 class IndexView(ListView):
     model = Advertisement
@@ -52,6 +56,7 @@ class AdvCreateView(LoginRequiredMixin, CreateView):
 # проверка на то, что редактирует её создатель или админ, а не какой либо другой автор 
 # дженерик для редактирования объекта
 class AdvUpdateView(LoginRequiredMixin, UpdateView):
+    model = Advertisement
     template_name = 'theWow/adv_create.html'
     form_class = AdvertisementForm
     login_url = settings.LOGIN_URL
@@ -79,3 +84,14 @@ class AdvDeleteView(LoginRequiredMixin,DeleteView):
     #     # add custom message
     #     messages.error(self.request, 'Чтобы удалить статью, вам нужно войти в качестве автора')
     #     return redirect(self.get_login_url())
+
+class ResponseCreateView(CreateView):
+    model = Response
+    form_class = ResponseForm
+    template_name = 'theWow/response_create.html'
+    success_url = reverse_lazy('wow_adv:home')
+    
+    def  form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.advert_id = self.kwargs['pk']
+        form.instance.responseUser = self.request.user
+        return super().form_valid(form)
