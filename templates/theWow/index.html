@@ -16,9 +16,9 @@
         {% comment %} <a href="{% url 'wow_members:profile' user.id %}" class="btn-link"><span class="d-inline">Привет, {{ user.username }}</span></a> {% endcomment %}
         {% comment %} <a href="{% url 'wow_members:logout' %}" class="btn btn-link">Выйти</a> {% endcomment %}
      {% else %}
-        <a href="{% url 'custom_login' %}" class="btn btn-link">Войти</a>
+        <a href="{% url 'wow_members:custom_login' %}" class="btn btn-link">Войти</a>
     {% endif %}
-          <a href="{% url 'custom_signup' %}" class="btn btn-link">signup</a>
+          <a href="{% url 'wow_members:custom_signup' %}" class="btn btn-link">signup</a>
 
     {% for adv in object_list %}
         <div>
