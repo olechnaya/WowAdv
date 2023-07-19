@@ -7,7 +7,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('theWowAdv.urls')),
-    path('accounts/', include('allauth.urls')),
+    path('members/', include('allauth.urls')),
+    path('members/', include('members.urls')),
 ]
 
 urlpatterns += [

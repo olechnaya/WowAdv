@@ -23,6 +23,7 @@ class IndexView(ListView):
     model = Advertisement
     template_name = "theWow/index.html"
     context_object_name = 'posts'
+    ordering = ['-id']
 
 
 from django.core.cache import cache # импортируем наш кэш      

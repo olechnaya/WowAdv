@@ -15,7 +15,8 @@
    <p>
    {{ adv.body|safe }}
    </p>
-
+    {% comment %} TODO: for empty  {% endcomment %}
+    {% comment %} TODO: sort by date  {% endcomment %}
    <h2>Отклики</h2>
    {% if not adv.responses.all %}
         Откликов на объявление еще нет
