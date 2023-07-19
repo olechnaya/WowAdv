@@ -36,11 +36,10 @@ class Advertisement(models.Model):
     def get_absolute_url(self):
         return f'/advert/{self.id}'
         # не получается работать
-        #  return reverse('adv_detail', args=(str(self.id)))
+        #  return reverse('view_adv', args=(str(self.id)))
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
-
 
 
 class Response(models.Model):

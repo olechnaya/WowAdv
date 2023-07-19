@@ -12,7 +12,7 @@ urlpatterns = [
     # path — означает путь. В данном случае путь ко всем товарам 
     # у нас останется пустым, позже станет ясно почему
     path('', IndexView.as_view(), name="home"),
-    path('advert/<int:pk>', AdvDetailView.as_view(), name="adv_detail"),
+    path('advert/<int:pk>', AdvDetailView.as_view(), name="view_adv"),
     path('create-adv/', AdvCreateView.as_view(), name='create_adv'),
     path('advert/edit/<int:pk>', AdvUpdateView.as_view(), name='edit_adv'),
     path('advert/remove/<int:pk>', AdvDeleteView.as_view(), name='remove_adv'),

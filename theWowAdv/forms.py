@@ -11,10 +11,11 @@ class AdvertisementForm(ModelForm):
 
     class Meta:
         model = Advertisement
-        fields = ('title', 'category', 'body', 'exp_date')
+        fields = ('title', 'category', 'body', 'exp_date', 'author')
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'category': forms.Select(attrs={'class':'form-select'}),
+            'author': forms.TextInput(attrs={'id':'author_id','type':'hidden'}),
             # 'body': forms.Textarea(attrs={'class':'form-control'}),
             'exp_date': DateTimePickerInput(options={"format": "DD/MM/YYYY"}),
         }

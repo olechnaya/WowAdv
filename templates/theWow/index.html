@@ -13,24 +13,35 @@
          <a href="{% url 'wow_adv:create_adv' %}" class="btn btn-success">
         Добавить объявление</a> 
 
-        {% comment %} <a href="{% url 'wow_members:profile' user.id %}" class="btn-link"><span class="d-inline">Привет, {{ user.username }}</span></a> {% endcomment %}
-        {% comment %} <a href="{% url 'wow_members:logout' %}" class="btn btn-link">Выйти</a> {% endcomment %}
+        <a href="{% url 'wow_members:view_profile' user.id %}" class="btn-link">
+            <span class="d-inline">Привет, {{ user.username }}</span>
+        </a>
+        <a href="{% url 'account_logout' %}" class="btn btn-link">Выйти куда то</a>
+     {% else %}
+        <a href="{% url 'account_login' %}" class="btn btn-link">Войти</a>
+    {% endif %}
+          <a href="{% url 'account_signup' %}" class="btn btn-link">signup</a>
+        {% comment %} <a href="{% url 'wow_members:custom_logout' %}" class="btn btn-link">Выйти</a>
      {% else %}
         <a href="{% url 'wow_members:custom_login' %}" class="btn btn-link">Войти</a>
     {% endif %}
-          <a href="{% url 'wow_members:custom_signup' %}" class="btn btn-link">signup</a>
+          <a href="{% url 'wow_members:custom_signup' %}" class="btn btn-link">signup</a> {% endcomment %}
 
     {% for adv in object_list %}
         <div>
-            <h2><a href="{% url 'wow_adv:adv_detail' adv.id %}" >{{ adv.title }}</a></h2>
+            <h2><a href="{% url 'wow_adv:view_adv' adv.id %}" >{{ adv.title }}</a></h2>
             <p>{{ adv.body|slice:":150"|safe }}</p>
             <p>Автор: {{ adv.author }}</p>
             <p>Категория: {{ adv.get_category_display }}</p>
             <p>Откликов: {{ adv.responses.count}}</p>
+            {% if user.id == adv.author.id %}
              <a href="{% url 'wow_adv:edit_adv' adv.id %}" class="btn btn-outline-primary btn-sm">                
                 Редактировать</a>
             <a href="{% url 'wow_adv:remove_adv' adv.id %}" class="btn btn-outline-danger btn-sm">
                 Удалить</a>
+                {% else %} 
+                не создатель
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock abracadabra %}

@@ -22,7 +22,7 @@
         Откликов на объявление еще нет
         <a href="{% url 'wow_adv:create_response' adv.pk %}">Можете откликнуться</a>
     {% else %}
-        <a href="{% url 'wow_adv:create_response' adv.pk %}">Откликнуться</a>
+       <p> <a href="{% url 'wow_adv:create_response' adv.pk %}">Откликнуться</a></p>
         {% for response in adv.responses.all %}
             <strong>{{ response.title }}</strong>
             <strong>{{ response.dateCreation }}</strong>

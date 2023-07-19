@@ -1,0 +1,46 @@
+{% extends 'defaultLayout.html' %} 
+ 
+{% block title %}
+Профиль
+{% endblock title %}
+ 
+{% block abracadabra %}
+
+<h2>Страница авторизованного пользователя {{ request.user.username }}</h2>
+ <a href="{% url 'wow_members:search' %}" class="btn btn-outline-primary btn-sm">                
+                Поиск по откликам</a>
+<p>{{ profile.name }}</p>
+<p>{{ profile.email }}</p>
+<h2>Объявления</h2>
+<div class="profile card-deck mb-3 text-center">
+{% for advert in adverts %}
+    <div class="card mb-4 box-shadow">
+        <div class="card-body">
+            <h5 class="card-title">{{ advert.title }}</h5> 
+             <a href="{% url 'wow_adv:edit_adv' advert.id %}" class="btn btn-outline-primary btn-sm">                
+                Редактировать</a>
+            <a href="{% url 'wow_adv:remove_adv' advert.id %}" class="btn btn-outline-danger btn-sm">
+                Удалить</a>      
+            {% comment %} <a href = "{% url 'news:category_unsubscribe' cat.id %}" class="btn btn-dark stretched-link">Отписаться</a> {% endcomment %}
+        </div>
+    </div>   
+{% empty %}
+   Нет объявлений
+{% endfor %}
+ </div>
+
+ <h2>Отклики</h2>
+ {% for response in advResponses %}
+    <div class="card mb-4 box-shadow">
+        <div class="card-body">
+            <h5 class="card-title">{{ response.title }}</h5> 
+            <p>Инфа пользователя оставившего отклик:{{ response.responseUser}}</p>
+            <p>Текст отклика:{{ response.text}}</p>
+            <p>Дата отклика:{{ response.dateCreation}}</p>
+        </div>
+    </div>   
+{% empty %}
+   Нет откликов
+{% endfor %}
+
+{% endblock abracadabra %}

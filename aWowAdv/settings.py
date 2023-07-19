@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "bootstrap_datepicker_plus",
     'django_ckeditor_5',
+    'django_filters',
 
     #########
     # User apps
@@ -125,8 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # LOGIN_URL = '/members/login/'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'wow_adv:home'
+LOGOUT_REDIRECT_URL = 'wow_adv:home'
 
 AUTHENTICATION_BACKENDS = [
    # Needed to login by username in Django admin, regardless of `allauth`

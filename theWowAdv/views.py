@@ -23,13 +23,18 @@ class IndexView(ListView):
     model = Advertisement
     template_name = "theWow/index.html"
     context_object_name = 'posts'
-    ordering = ['-id']
+    queryset = Advertisement.objects.order_by('-pub_date')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_now'] = datetime.utcnow()
+        return context
 
 
 from django.core.cache import cache # импортируем наш кэш      
 class AdvDetailView(DetailView):
     model = Advertisement
-    template_name = "theWow/adv_detail.html"
+    template_name = "theWow/view_adv.html"
     context_object_name = 'adv'
 
     def get_object(self, *args, **kwargs): # переопределяем метод получения объекта, как ни странно
