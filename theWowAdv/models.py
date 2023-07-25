@@ -48,7 +48,7 @@ class Response(models.Model):
         verbose_name_plural = 'Отклики'
     advert = models.ForeignKey(Advertisement, related_name="responses", on_delete=models.CASCADE)
     responseUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    approved = models.BooleanField('Принято', default=False)
+    isApproved = models.BooleanField('Принято', default=False)
     title = models.CharField('Заголовок', max_length=255, default="", blank=True)
     text = models.TextField('Сообщение', max_length=512)
     dateCreation = models.DateTimeField(auto_now_add=True)

@@ -10,4 +10,7 @@ urlpatterns = [
     # path('logout', LogoutView.as_view(), name="custom_logout" ),
     path('<int:pk>', profile, name="view_profile"),
     path('search/', ResponseSearch.as_view(), name='search'),
+    path('approve/<int:pk>', ApproveResponse, name='approve_response'),
+    path('reject/<int:pk>', RejectResponse, name='reject_response'),
+    path('delete/<int:pk>', DeleteResponse, name='delete_response'),
 ]

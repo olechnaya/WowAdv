@@ -39,8 +39,6 @@
                 Редактировать</a>
             <a href="{% url 'wow_adv:remove_adv' adv.id %}" class="btn btn-outline-danger btn-sm">
                 Удалить</a>
-                {% else %} 
-                не создатель
             {% endif %}
         </div>
     {% endfor %}

@@ -31,9 +31,11 @@ class AdvertisementForm(ModelForm):
 class ResponseForm(forms.ModelForm):
      class Meta:
         model = Response
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'advert', 'responseUser')
 
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'text': forms.Textarea(attrs={'class':'form-control'}),
+            'advert': forms.HiddenInput(),
+            'responseUser': forms.HiddenInput(),
         }

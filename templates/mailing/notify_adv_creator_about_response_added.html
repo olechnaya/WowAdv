@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оповещение</title>
+</head>
+<body>
+   <h1>Оповещение о публикации отклика на объявление</h1>
+    <p>Приветствую,<strong>{{ response.advert.author.username }}</strong></p>
+    <p>На ваше объявление поступил отклик.</p>
+    <p>Заголовок объявления: <strong>{{ response.advert.title }}</strong></p>
+    <p>Дата публикации: <small>{{ response.advert.pub_date }}</small></p>
+    <h2>Отклик</h2>
+    <p>Заголовок: <strong>{{ response.title }}</strong></p>
+    <p>Сообщение: <strong>{{ response.text }}</strong></p>
+    <p>Дата отклика: <strong>{{ response.dateCreation }}</strong></p>
+    <p>Автор отклика: <strong>{% firstof response.responseUser.firstname response.responseUser.username  %} </strong></p>
+</body>
+</html>

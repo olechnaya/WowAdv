@@ -128,6 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # LOGIN_URL = '/members/login/'
 LOGIN_REDIRECT_URL = 'wow_adv:home'
 LOGOUT_REDIRECT_URL = 'wow_adv:home'
+LOGIN_URL = '/members/login/'
 
 AUTHENTICATION_BACKENDS = [
    # Needed to login by username in Django admin, regardless of `allauth`

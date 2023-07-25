@@ -22,30 +22,47 @@ from django.conf import settings
 class IndexView(ListView):
     model = Advertisement
     template_name = "theWow/index.html"
-    context_object_name = 'posts'
     queryset = Advertisement.objects.order_by('-pub_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['time_now'] = datetime.utcnow()
         return context
+    
 
-
-from django.core.cache import cache # импортируем наш кэш      
-class AdvDetailView(DetailView):
+from django.views.generic.edit import FormMixin
+from django.urls import reverse
+class AdvDetailView(FormMixin,DetailView):
     model = Advertisement
     template_name = "theWow/view_adv.html"
     context_object_name = 'adv'
+    form_class=ResponseForm
 
-    def get_object(self, *args, **kwargs): # переопределяем метод получения объекта, как ни странно
-        obj = cache.get(f'post-{self.kwargs["pk"]}', None) # кэш очень похож на словарь, и метод get действует также. Он забирает значение по ключу, если его нет, то забирает None.
- 
-        # если объекта нет в кэше, то получаем его и записываем в кэш
-        if not obj:
-            obj = super().get_object(queryset=self.queryset) 
-            cache.set(f'post-{self.kwargs["pk"]}', obj)
-        
-        return obj
+    def get_success_url(self):
+        return reverse('wow_adv:view_adv', kwargs={'pk': self.object.id})
+    
+    def get_context_data(self, **kwargs):
+        context = super(AdvDetailView, self).get_context_data(**kwargs)
+        context['form'] = ResponseForm(initial={'advert': self.object, 'responseUser':self.request.user})
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super(AdvDetailView, self).form_valid(form)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)       
+    #     context['form'] = self.form     
+    #     return context
+
 
 class AdvCreateView(LoginRequiredMixin, CreateView):
     #permission_required = ('wow_adv.add_post')
@@ -76,7 +93,8 @@ class AdvUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)       
         context['isUpdateView'] = True        
         return context
-    
+
+
 class AdvDeleteView(LoginRequiredMixin,DeleteView):
     #permission_required = ('news.delete_post')
     template_name = 'theWow/adv_delete.html'
@@ -91,13 +109,56 @@ class AdvDeleteView(LoginRequiredMixin,DeleteView):
     #     messages.error(self.request, 'Чтобы удалить статью, вам нужно войти в качестве автора')
     #     return redirect(self.get_login_url())
 
-class ResponseCreateView(CreateView):
-    model = Response
-    form_class = ResponseForm
-    template_name = 'theWow/response_create.html'
-    success_url = reverse_lazy('wow_adv:home')
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
+DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
+
+def notify_adv_creator_about_response_added(
+        sender, 
+        instance, 
+        created, 
+        **kwargs):
     
-    def  form_valid(self, form: BaseModelForm) -> HttpResponse:
-        form.instance.advert_id = self.kwargs['pk']
-        form.instance.responseUser = self.request.user
-        return super().form_valid(form)
+    how_to_appeal = "{pronoun},".format(pronoun="Уважаемый пользователь" if instance.responseUser.first_name == "" else instance.responseUser.first_name)
+    subject = f'{how_to_appeal}, добавлен отлкик к объявлению {instance.dateCreation.strftime("%d %m %Y")}'
+
+    email = instance.advert.author.email
+    html = render_to_string(
+        'mailing/notify_adv_creator_about_response_added.html', 
+        {
+            'response': instance,
+            'user': instance.responseUser,
+        },
+    )
+    
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        # subject=f'Добавлен отклик к вашему объявлению - {instance.title}',
+        body='',
+        from_email= DEFAULT_FROM_EMAIL,
+        to=[email,], # это то же, что и recipients_list - передаем коллекцию
+    )
+    
+    msg.attach_alternative(html, 'text/html')
+    try:
+        msg.send() # отсылаем  
+    except Exception as e:
+        print(e)
+
+# коннектим наш сигнал к функции обработчику и указываем, к какой именно модели после сохранения привязать функцию
+post_save.connect(notify_adv_creator_about_response_added, sender=Response)
+
+# class ResponseCreateView(CreateView):
+#     model = Response
+#     form_class = ResponseForm
+#     template_name = 'theWow/response_create.html'
+        
+#     def form_valid(self, form: BaseModelForm) -> HttpResponse:
+#         form.instance.advert_id = self.kwargs['pk']
+#         form.instance.responseUser = self.request.user
+#         return super().form_valid(form)
+

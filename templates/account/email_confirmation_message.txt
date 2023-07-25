@@ -1,0 +1,11 @@
+{% load userprofile %}{% make_confirm_url as the_link %}
+{% load account %}{% user_display user as user_display %}{% load i18n %}
+{% autoescape off %}{% blocktrans with site_name=current_site.namesite_domain=current_site.domain %}
+Приветствие от {{ site_name }}!
+
+Вы получили это письмо, поскольку пользователь {{ user_display }} указал ваш e-mail адрес для регистрации на нашем сайте.
+
+Для подтвреждения e-mail, перейдите по ссылке {{the_link}}
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Спасибо от команды разработки {{ site_name }} !
+{{ site_domain }}{% endblocktrans %}
