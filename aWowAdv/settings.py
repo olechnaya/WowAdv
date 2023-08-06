@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "bootstrap_datepicker_plus",
     'django_ckeditor_5',
     'django_filters',
+    'django_apscheduler',
 
     #########
     # User apps
@@ -83,7 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'aWowAdv.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -233,3 +233,7 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.views.generic import\
      ListView,\
      DetailView,\
@@ -14,7 +16,7 @@ from django.views.generic import\
 
 
 from theWowAdv.models import *
-from theWowAdv.forms import AdvertisementForm, ResponseForm
+from theWowAdv.forms import AdvertisementForm, ResponseForm, SubscriptionForm
 from django.conf import settings
 
 
@@ -117,6 +119,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
 
+# TODO: вынести в сигналы
 def notify_adv_creator_about_response_added(
         sender, 
         instance, 
@@ -162,3 +165,46 @@ post_save.connect(notify_adv_creator_about_response_added, sender=Response)
 #         form.instance.responseUser = self.request.user
 #         return super().form_valid(form)
 
+# @login_required
+# def SubscribeCategory(request, pk): 
+#     user = request.user
+#     category = CATEGORIES(pk=pk)
+def subscribe_category(request):
+    form = SubscriptionForm()
+    # rendered_form = form.render("form_snippet.html")
+    context = {"form": form}
+    #  context['form'] = ResponseForm(initial={'advert': self.object, 'responseUser':self.request.user})
+    return render(request, "theWow/render_test_form.html", context)
+
+from django.contrib.auth import get_user_model
+def subscribe(request):
+    if request.method == 'POST':
+        name=request.POST.get('name',None)
+        email=request.POST.get('email',None)
+
+        if not name or not email:
+            messages.error(request, 'Необходимо предоставить корректный email и имя')
+            return redirect('/')
+        
+        if get_user_model().objects.filter(email=email).first():
+            messages.error(request, f'Пользователь с данным email {email} уже зарегистрирован,\
+                           вам необходимо залогиниться для подписки / отписки от новостей')
+            return redirect(request.META.get('HTTP_REFERER'),'/')
+        
+        newsletter_subscribed_user = NewsLetterSubscribedUsers.objects.filter(email=email).first()
+        if newsletter_subscribed_user:
+            messages.error(request, f'Пользователь с данным email {email} уже подписан на наши новости')
+            return redirect(request.META.get('HTTP_REFERER'),'/')
+
+        try:
+            validate_email(email)
+        except ValidationError as e:
+            messages.error(request,e.messages[0])
+            return redirect('/')
+        
+        newsletter_subscribed_user =NewsLetterSubscribedUsers()
+        newsletter_subscribed_user.name = name
+        newsletter_subscribed_user.email = email
+        newsletter_subscribed_user.save()
+        messages.success(request, f'{email} успешно подписан на нашу новостную рассылку')
+        return redirect(request.META.get('HTTP_REFERER'),'/')

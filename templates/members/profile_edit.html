@@ -1,0 +1,16 @@
+{% extends 'defaultLayout.html' %} 
+ 
+{% block title %}
+Редактировать профиль
+{% endblock title %}
+ 
+{% block abracadabra %}
+<h1> Редактировать профль</h1>
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Ообновить профиль</button>
+    </form>
+</div>
+{% endblock abracadabra %}

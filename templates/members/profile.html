@@ -17,7 +17,7 @@
 {% for advert in adverts %}
     <div class="card mb-4 box-shadow">
         <div class="card-body">
-            <h5 class="card-title">{{ advert.title }}</h5> 
+            <h5 class="card-title"><a href="{% url 'wow_adv:view_adv' advert.id %}">{{ advert.title }}</a></h5> 
              <a href="{% url 'wow_adv:edit_adv' advert.id %}" class="btn btn-outline-primary btn-sm">                
                 Редактировать</a>
             <a href="{% url 'wow_adv:remove_adv' advert.id %}" class="btn btn-outline-danger btn-sm">
@@ -38,6 +38,12 @@
             <p>Инфа пользователя оставившего отклик:{{ response.responseUser}}</p>
             <p>Текст отклика:{{ response.text}}</p>
             <p>Дата отклика:{{ response.dateCreation}}</p>
+             {% if response.isApproved  %}
+                <a href="{% url 'wow_members:reject_response' response.id %}">Отклонить</a>
+              {% else %}
+                <a href="{% url 'wow_members:approve_response' response.id %}">Принять</a>
+                <a href="{% url 'wow_members:delete_response' response.id %}">Удалить</a>
+              {% endif %}   
         </div>
     </div>   
 {% empty %}

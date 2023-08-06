@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Еженедельное оповещение</title>
+</head>
+<body>
+<h1>{{subscriber.name}}, новые объявления на нашем портале: </h1>
+
+{% for adv in advertisements_for_a_week %}
+    <p><a href="http://localhost:8000{% url 'wow_adv:view_adv' adv.id %}">{{ adv.title }}</a></p>
+    <p>{{ adv.category }}</p>
+{% endfor %}
+</body>
+</html>

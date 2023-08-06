@@ -1,14 +1,25 @@
-from typing import Any
+from typing import Any, Optional
+from django.db import models
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib import messages
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
+from django.urls import reverse_lazy
+from members.forms import EditProfileForm
 
 from theWowAdv.models import Advertisement, Response
 from members.filters import ResponseFilter
 
+class UserEditView(UpdateView):
+    # form_class = UserChangeForm
+    form_class = EditProfileForm
+    template_name = 'members/profile_edit.html'
+    success_url = reverse_lazy('wow_adv:home')
 
+    def get_object(self, queryset: QuerySet[Any] | None = ...) -> User:
+        return self.request.user
 
 def profile(request, pk):
     if request.user.is_authenticated:
@@ -54,6 +65,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
+
+
 
 def ApproveResponse(request, pk): 
     response = Response.objects.get(pk=pk)

@@ -39,3 +39,27 @@ class ResponseForm(forms.ModelForm):
             'advert': forms.HiddenInput(),
             'responseUser': forms.HiddenInput(),
         }
+
+
+class SubscriptionForm(ModelForm):   
+    class Meta:
+        model = CategorySubscription
+        fields = ('name', 'user')
+
+    # CATEGORIES = [
+    #     ('T','Танки'),
+    #     ('HM','Хилы'),
+    #     ('DD','ДД'),
+    #     ('TrM','Торговцы'),
+    #     ('GM','Гилдмастеры'),
+    #     ('QG','Квестгиверы'),
+    #     ('FM','Кузнецы'),
+    #     ('LM','Кожевники'),
+    #     ('PM','Зельевары'),
+    #     ('WM','Мастера заклинаний'),
+    # ]
+
+    # cats = forms.MultipleChoiceField(
+    #     widget=forms.CheckboxSelectMultiple,
+    #         choices=CATEGORIES, 
+    #         label="Категории",) 
