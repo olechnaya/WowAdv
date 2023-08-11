@@ -11,33 +11,40 @@
     <div class="ads-content">
         <div class="container">
             <div class="space-lg"></div>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for adv in object_list %}  
-                {% cycle '<div class="row">' '' '' %}
-                {% if adv %}
-                    <div class="col-lg-4 mb-3 d-flex align-items-stretch">
-                    <div class="card">
+               
+                    <div class="col">
+                        <div class="card h-100">
                             <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between">
+                                    <div class="date-added">{{ adv.pub_date}}</div>
+                                    <div class="response-count">
+                                        <span>
+                                            <svg class="ico" width="16" height="16" fill="currentColor">
+                                                <use xlink:href="{% static 'img/bootstrap-icons.svg' %} #chat-right-text-fill"></use>
+                                            </svg>
+                                        </span>
+                                        {{ adv.responses.count}}
+                                    </div>
+                                </div>
                                 <h5 class="card-title">
                                     {{ adv.title }}
                                 </h5>
-                                <p>{{ adv.body|slice:":150"|safe }}</p>
-                                <p>Автор: {{ adv.author }}</p>
-                                <p>Категория: {{ adv.get_category_display }}</p>
-                                <p>Откликов: {{ adv.responses.count}}</p>
+                                <div class="author">Создано: <strong>{{ adv.author }}</strong> в категории <strong>{{ adv.get_category_display }}</strong></div>
+                                <p>{{ adv.body|slice:":150"|safe }}...</p>
                                 {% if user.id == adv.author.id %}
                                 <a href="{% url 'wow_adv:edit_adv' adv.id %}" class="btn btn-outline-primary btn-sm">                
                                     Редактировать wtf</a>
                                 <a href="{% url 'wow_adv:remove_adv' adv.id %}" class="btn btn-outline-danger btn-sm">
                                     Удалить wtf</a>
-                                {% endif %}
-                                <a href="{% url 'wow_adv:view_adv' adv.id %}" >Подробнее</a>
+                                {% endif %}   
+                            </div>
+                            <div class="card-footer">
+                                <a href="{% url 'wow_adv:view_adv' adv.id %}" class="btn read-more">Подробнее</a>
                             </div>
                         </div>
                     </div>
-                {% else %}
-                        empty item{{ forloop.counter }}
-                {% endif %}
-                {% cycle '' '' '</div>' %}
             {% endfor %}
         </div>    
     </div>

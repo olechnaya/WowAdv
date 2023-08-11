@@ -134,6 +134,32 @@ main > .container {
     padding-top: 10px;
 }
 
+.ads-content .card-footer {
+    width: 100%;
+    border: none;
+}
+
+.card a.read-more {
+    width: 100%;
+    border-color: #ea3012;
+    background: rgba(159,22,0,.6);
+    padding: 12px 30px;
+    color: rgb(247, 177, 10);
+    text-transform: uppercase;
+}
+.card a.read-more:hover {
+    background: #9f1600;
+}
+
+.card .date-added, 
+.card .response-count,
+.card .author {
+    font-size: 0.9em;
+    color: #cacaca;
+    text-shadow: 0 0 1px transparent, 0 1px 2px rgba(0,0,0,.8);
+    font-weight: 400;
+}
+
 .header-divider, .header-divider:after, .header-divider:before {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -163,6 +189,7 @@ main > .container {
 .header-divider h3 {
     font-size: 1.44rem;
     padding: 0 10px;
+    margin-bottom: 0;
     line-height: 1.5;
     font-family: Semplicita Pro,Open Sans,Arial,Helvetica,sans-serif;
     color: #ebdec2;
@@ -244,4 +271,65 @@ main > .container {
     outline-width: 0;
     outline: 0;
     border-color:#c77e19;
+}
+
+footer .container > div {
+    position: relative;
+    text-align: center;
+}
+
+.top-links a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: hsla(0,0%,100%,.7);
+}
+
+.top-links a:hover, .top-links a:focus {
+    color: #fff;
+}
+
+.bottom-links a {
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.link {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.link:not(:last-of-type):after {
+    background-color: hsla(0,0%,100%,.3);
+    content: "";
+    display: inline-block;
+    height: 10px;
+    pointer-events: none;
+    position: relative;
+    right: -9px;
+    width: 1px;
+}
+
+.download-app {
+    margin: 40px 0px;
+}
+
+.download-app a {
+    color: #66c4ff;
+}
+
+.trademark {
+    color: hsla(0,0%,100%,.5);
+    font-size: 12px;
+}
+
+.logo {
+    margin: 30px 0px;
+}
+
+footer  {
+    background-image: url("/static/img/footer_bg.jpg");
+    background-position: top;
+    background-size: 100%;
+    background-repeat: repeat;
 }
