@@ -165,17 +165,6 @@ post_save.connect(notify_adv_creator_about_response_added, sender=Response)
 #         form.instance.responseUser = self.request.user
 #         return super().form_valid(form)
 
-# @login_required
-# def SubscribeCategory(request, pk): 
-#     user = request.user
-#     category = CATEGORIES(pk=pk)
-def subscribe_category(request):
-    form = SubscriptionForm()
-    # rendered_form = form.render("form_snippet.html")
-    context = {"form": form}
-    #  context['form'] = ResponseForm(initial={'advert': self.object, 'responseUser':self.request.user})
-    return render(request, "theWow/render_test_form.html", context)
-
 from django.contrib.auth import get_user_model
 def subscribe(request):
     if request.method == 'POST':
@@ -202,7 +191,7 @@ def subscribe(request):
             messages.error(request,e.messages[0])
             return redirect('/')
         
-        newsletter_subscribed_user =NewsLetterSubscribedUsers()
+        newsletter_subscribed_user = NewsLetterSubscribedUsers()
         newsletter_subscribed_user.name = name
         newsletter_subscribed_user.email = email
         newsletter_subscribed_user.save()

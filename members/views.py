@@ -3,7 +3,8 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
 from django.views.generic import ListView, UpdateView
 from django.urls import reverse_lazy
@@ -11,6 +12,14 @@ from members.forms import EditProfileForm
 
 from theWowAdv.models import Advertisement, Response
 from members.filters import ResponseFilter
+
+class PasswordChange(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('wow_members:password_success')
+
+
+def password_success(request):
+    return render(request, 'members/password_success.html', {})
 
 class UserEditView(UpdateView):
     # form_class = UserChangeForm
