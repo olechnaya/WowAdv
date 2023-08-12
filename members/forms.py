@@ -1,6 +1,26 @@
 from django.contrib.auth.forms import UserChangeForm
+from allauth.account.forms import LoginForm
 from django.contrib.auth.models import User
 from django import forms
+
+
+class WowAdvLoginForm(LoginForm):
+    #required_css_class = 'required'
+    #error_css_class = 'error'
+    # TODO: нет вывода ошибок, не производится вход ни по логину ни по мейлу. через админ по учетке заходит kozhinova.olka@yandex.ru _Rosenrot1988 ч
+    def __init__(self, *args, **kwargs):
+        super(WowAdvLoginForm, self).__init__(*args, **kwargs)
+        self.fields['login'].label = 'Логин или почта'
+        self.fields['login'].widget = forms.TextInput(attrs={
+            'class':'form-control',
+            'id': 'login' 
+        })   
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': '',
+        }
+))
 
 class EditProfileForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))

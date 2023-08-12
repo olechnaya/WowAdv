@@ -5,8 +5,13 @@
     Объявление
 {% endblock title %}
 
+{% block page-class %}
+   class="adv-detail"
+{% endblock page-class %}
 
 {% block abracadabra %}
+   <div class="container">
+           <div class="space-lg"></div>
    <a href="{% url 'wow_adv:home' %}">Назад</a>
    <h1> {{ adv.title }}</h1>
    <small>
@@ -17,14 +22,16 @@
    </p>
     {% comment %} TODO: for empty  {% endcomment %}
     {% comment %} TODO: sort by date  {% endcomment %}
+   {% comment %} TODO: breadcrumbs Гглавная - Категории - _категория_ - заголовок  {% endcomment %}
    <h2>Отклики</h2>
+      {% if user.is_authenticated %}
     <form method="post">
     {% comment %} <form action="{% url 'wow_adv:create_response' adv.id %}" method="post"> {% endcomment %}
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Отправить">
     </form>
-
+    {% endif %}
    {% if not adv.responses.all %}
         Откликов на объявление еще нет
         {% comment %} <a href="{% url 'wow_adv:create_response' adv.pk %}">Можете откликнуться</a> {% endcomment %}
@@ -58,4 +65,5 @@
  
 
    {% endif %}
+   </div>
 {% endblock abracadabra %}

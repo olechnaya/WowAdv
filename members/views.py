@@ -22,7 +22,6 @@ def password_success(request):
     return render(request, 'members/password_success.html', {})
 
 class UserEditView(UpdateView):
-    # form_class = UserChangeForm
     form_class = EditProfileForm
     template_name = 'members/profile_edit.html'
     success_url = reverse_lazy('wow_adv:home')
@@ -30,7 +29,7 @@ class UserEditView(UpdateView):
     def get_object(self, queryset: QuerySet[Any] | None = ...) -> User:
         return self.request.user
 
-def profile(request, pk):
+def UserProfileView(request, pk):
     if request.user.is_authenticated:
         profile = User.objects.get(pk=pk)
         advert_responses = _getUserArdvertResponses(request.user)

@@ -4,19 +4,16 @@
       <a class="navbar-brand" href="/">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 1 48 48" part="icon blz-icon"><path fill="#2B374C" fill-rule="evenodd" d="M24 8.848c8.8 0 16 7.255 16 16.121 0 8.867-7.2 16.121-16 16.121S8 33.836 8 24.97c0-8.867 7.2-16.122 16-16.122Z" clip-rule="evenodd"></path><path fill="#F4BF2A" fill-rule="evenodd" d="M44 24.97c0-4.031-1.2-8.061-3.6-11.487V8.647c0-.202-.2-.202-.2-.202h-4.8c-6.8-4.635-15.8-4.635-22.6 0H7.6v5.038c-4.8 6.851-4.8 16.12 0 22.972v4.837c0 .201.2.201.2.201h4.8c6.8 4.635 15.8 4.635 22.8 0h4.8c.2 0 .2-.202.2-.403v-4.836c2.4-3.224 3.6-7.255 3.6-11.285Zm-37.4-.001c0-9.673 7.8-17.531 17.4-17.531 9.6 0 17.4 7.859 17.4 17.531 0 9.673-7.8 17.532-17.4 17.532-9.6 0-17.4-7.86-17.4-17.532Z" clip-rule="evenodd"></path><path fill="#F4BF2A" fill-rule="evenodd" d="M12.4 15.498H19c-.2.806-.2 1.612-.2 2.418C19 20.94 21 29 21 29l3-12.695 3.2 12.292s2-10.881 2-11.687c0-.605-.4-1.008-.8-1.411h7c-1 .806-1.6 2.015-2 3.224-.6 2.418-2.8 14.509-2.8 15.315 0 .806.4 1.612.8 2.217H25c.2-.605.2-1.21.2-1.814 0-1.209-1-6.448-1-6.448s-1.4 5.44-1.4 6.448c0 .605.2 1.21.4 1.814h-6.6s1.2-1.008 1.2-1.814c-.2-2.418-3.6-15.315-3.8-16.322 0-1.008-.6-2.015-1.6-2.62Z" clip-rule="evenodd"></path></svg>
       </a>
-      <div class="d-flex flex-row-reverse collapse navbar-collapse" id="navbarCollapse">
-        <div class="flex">
-            {% if user.is_authenticated %}
-                 <a href="{% url 'wow_adv:create_adv' %}" class="btn btn-success">
-                Добавить объявление</a> 
-            {% endif %}
+      <div class="d-flex flex-row-reverse gap-4 collapse navbar-collapse" id="navbarCollapse">
+        
+            
             <div class="dropdown">
                 {% if user.is_authenticated %}
                     <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"> Приветствуем, {{ user.username }}
+                        <img src="{{ user.profile.profile_pic.url }}"  width="32" height="32" class="rounded-circle"> Приветствуем, {{ user.username }}
                     </a>
                     <ul class="dropdown-menu  dropdown-menu-end text-small shadow" style="">
-                        <li><a class="dropdown-item btn btn-primary" href="{% url 'account_login' %}">Войти</a></li>
+                       
                         <li><a class="dropdown-item" href="{% url 'wow_members:edit_profile' %}">Редактировать профиль</a></li>
                         <li><a class="dropdown-item" href="{% url 'wow_members:view_profile' user.id %}">Профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -32,7 +29,10 @@
                     </ul>
                 {% endif %}
             </div>
-        </div>
+            {% if user.is_authenticated %}
+                 <a href="{% url 'wow_adv:create_adv' %}" class="btn btn-add-adv">
+                Добавить объявление</a> 
+            {% endif %}
 
       </div>
     </div>

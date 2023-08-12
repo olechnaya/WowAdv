@@ -1,9 +1,13 @@
 from django import forms
 from django.forms import ModelForm
 
-from bootstrap_datepicker_plus.widgets import DateTimePickerInput
+
 
 from theWowAdv.models import *
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 
 class AdvertisementForm(ModelForm):
     error_css_class = 'error'
@@ -17,17 +21,8 @@ class AdvertisementForm(ModelForm):
             'category': forms.Select(attrs={'class':'form-select'}),
             'author': forms.TextInput(attrs={'id':'author_id','type':'hidden'}),
             # 'body': forms.Textarea(attrs={'class':'form-control'}),
-            'exp_date': DateTimePickerInput(options={"format": "DD/MM/YYYY"}),
+            'exp_date': DateInput(attrs={'class':'form-control'}),
         }
-
-        # labels = {
-        #     'title' : 'Заголовок поста',
-        #     'text' : 'Текст поста',
-        #     'author': 'Выбираем автора',
-        #     'category': 'Выбираем категорию',
-        #     'postType': 'Выбираем тип'
-        # }
-
 class ResponseForm(forms.ModelForm):
      class Meta:
         model = Response

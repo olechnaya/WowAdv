@@ -36,7 +36,7 @@ from django.views.generic.edit import FormMixin
 from django.urls import reverse
 class AdvDetailView(FormMixin,DetailView):
     model = Advertisement
-    template_name = "theWow/view_adv.html"
+    template_name = "theWow/adv_view.html"
     context_object_name = 'adv'
     form_class=ResponseForm
 

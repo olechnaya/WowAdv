@@ -3,34 +3,37 @@
 {% block title %}
 Создаем Объявление
 {% endblock title %}
-{% block abracadabra %}
 
+{% block page-class %}
+   class="adv-detail"
+{% endblock page-class %}
+
+
+{% block abracadabra %}
+<div class="container">
+        <div class="space-lg"></div>
+        <a href="{% url 'wow_adv:home' %}">Назад</a>
 {% comment %} {% if isUpdateView  %}
         <h1>Редактировать Объявление</h1>
     {% else %}
         <h1>Добавить Объявление</h1>
 {% endif %} {% endcomment %}
-{% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{{ form.media }}
-<form method="POST">
-    {% csrf_token %}
-    <div class="col-6 mb-3">     
-        {% comment %} {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка --> {% endcomment %}
-       {% comment %} {% bootstrap_form form %} {% endcomment %}
-       {{ form }}
-    </div>
-    {% if isUpdateView  %}
-        <input type="submit" value="Сохранить изменения" class="btn btn-primary">
-        {% else %}
-        <input type="submit" value="Добавляем" class="btn btn-primary">
-    {% endif %}
-</form>
-<script>
-    let name = "{{ user.id }}"
-    document.getElementById("author_id").value = name
-</script>
-
+     <form method="POST">
+        {% csrf_token %}
+        <div class="col-6 mb-3">    {{ form.media }} 
+        {{ form }}
+        </div>
+        {% if isUpdateView  %}
+            <input type="submit" value="Сохранить изменения" class="w-100 btn btn-primary">
+            {% else %}
+            <input type="submit" value="Добавляем" class="w-100 btn btn-primary">
+        {% endif %}
+    </form>
+    
+    <script>
+        let name = "{{ user.id }}"
+        document.getElementById("author_id").value = name
+    </script>
+</div>
 
 {% endblock abracadabra %}

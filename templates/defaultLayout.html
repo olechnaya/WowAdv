@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}  {% endblock title %}</title>
     {% bootstrap_css %}
+    {% block extra_css %}{% endblock %}
+    
     {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> {% endcomment %}
    
     <link rel="stylesheet"  type="text/css" href="{% static 'styles/general.css' %}" />
@@ -15,10 +17,10 @@
     <link type="image/x-icon" rel="icon" href="{% static 'img/favicon.ico' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;700;900&display=swap" rel="stylesheet">
 
 </head>
-<body>
+<body {% block page-class %}  {% endblock page-class %}>
 {% include 'theWow/includes/messaging.html' %}
 {% include 'theWow/includes/header.html' %}
   <main>
@@ -45,7 +47,15 @@
         
         {% endblock abracadabra %}
   </main> 
-     {% include "theWow/includes/footer.html" %}
+   
+      {% block subscription %}
+         
+      {% endblock %}  
+
+      {% include "theWow/includes/footer.html" %}
+     
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
       {% bootstrap_javascript %}
+      {% block extra_js %}{% endblock %}
   </body>
 </html>

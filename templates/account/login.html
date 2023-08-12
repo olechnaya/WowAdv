@@ -1,0 +1,41 @@
+{% extends 'defaultAccountLayout.html' %} 
+{% load static %}
+
+{% block title %}
+    Вход
+{% endblock title %}
+
+{% block page-class %}
+   class="adv-detail"
+{% endblock page-class %}
+{% block abracadabra %}
+    {% comment %} <img src="{% static 'img/footer-logo.png' %}" alt="">
+    <h1 class="h3 mb-3 fw-normal">Полный доступ к порталу</h1>
+    <p>Войдите под одной из своих учетных записей. Или <a href="{{ signup_url }}">зарегистрирйтесь</a></p>
+    <form method="post" action="{% url 'account_login' %}">
+    {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+    {% csrf_token %}
+    <div class="form-floating">
+      <input type="text" class="form-control" id="login" placeholder="name@example.com">
+      <label for="login">Email или Логин</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" placeholder="Password">
+      <label for="password">Пароль</label>
+    </div>
+     <button type="submit" class="w-100 btn btn-lg btn-primary">Войти</button>
+     </form> {% endcomment %}
+   
+
+ 
+<h2>Войти в аккаунт</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Войти</button>
+  </form>
+
+
+{% endblock abracadabra %}

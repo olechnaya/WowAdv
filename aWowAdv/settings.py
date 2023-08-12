@@ -124,19 +124,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# LOGIN_URL = '/members/login/'
 LOGIN_REDIRECT_URL = 'wow_adv:home'
 LOGOUT_REDIRECT_URL = 'wow_adv:home'
 LOGIN_URL = '/members/login/'
 
 AUTHENTICATION_BACKENDS = [
    # Needed to login by username in Django admin, regardless of `allauth`
-   'django.contrib.auth.backends.ModelBackend',
-  
+   'django.contrib.auth.backends.ModelBackend',  
    # `allauth` specific authentication methods, such as login by e-mail
    'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+ACCOUNT_FORMS = {    
+    'login':'members.forms.WowAdvLoginForm'
+}
+
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
@@ -244,3 +246,61 @@ CKEDITOR_5_CONFIGS = {
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+BOOTSTRAP_DATEPICKER_PLUS = {
+    # Options for all input widgets
+    # More options: https://getdatepicker.com/4/Options/
+    "options": {
+        # "locale": "bn",
+        "showClose": True,
+        "showClear": True,
+        "showTodayButton": True,
+        "allowInputToggle": True,
+    },
+    # You can set date and event hook options using JavaScript, usage in README.
+    # You can also set options for specific variant widgets only which overrides above options.
+    "variant_options": {
+        # "date": {
+        #     "format": "MM/DD/YYYY",
+        # },
+        # "datetime": {
+        #     "format": "MM/DD/YYYY HH:mm",
+        # },
+        "month": {
+            "format": "MMMM, YYYY",
+        },
+    },
+    #
+    # HTML attributes for widget <input> element
+    # "attrs": {
+    #     "class": "input",
+    # },
+    #
+    # Override input addon icon classes
+    "addon_icon_classes": {
+        "month": "bi-calendar-month",
+    },
+    #
+    # HTML template to render the html input
+    # example: https://github.com/monim67/django-bootstrap-datepicker-plus/blob/5.0.0/dev/myapp/templates/myapp/custom-input.html
+    #
+    # "template_name": "your-app/custom-input.html",
+    #
+    # Advanced: Choose where from static JS/CSS files are served.
+    # defaults: https://github.com/monim67/django-bootstrap-datepicker-plus/blob/5.0.0/src/bootstrap_datepicker_plus/settings.py#L16
+    # To serve from any other preferred CDN, just update the options below.
+    # You can also set them to None if you already have the following resources
+    # included into your template.
+    #
+    # "datetimepicker_js_url": "https://..",
+    # "datetimepicker_css_url": "https://..",
+    # "momentjs_url": None,  # If you already have momentjs added into your template
+    # "bootstrap_icon_css_url": None,  # If you don't need bootstrap icons
+    #
+    # If you want to serve static files yourself without CDN (from staticfiles) and
+    # you know how to serve django static files on production server (DEBUG=False)
+    # Then download the js/css files to any of your static directory, update the js/css
+    # urls above and set the following option
+    #
+    # "app_static_url": "bootstrap_datepicker_plus/",
+}

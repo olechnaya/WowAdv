@@ -1,0 +1,47 @@
+body {
+    background: url("/static/img/subtle-bg.png") center 0px no-repeat,linear-gradient(90deg, #111217 0%, #15171e 30%, #15171e 70%, #111217 100%) center 0px repeat-y;
+    background-color: #111217;
+    color: #ebdec2;
+}
+
+.form-signin {
+    max-width: 360px;
+    padding: 15px;
+}
+
+.form-signin input {
+    background: #45a3bf1c;
+    border-color: #24657a78;
+    color: #fff;
+}
+
+.form-signin .form-control:focus {
+    color: #fafafa;
+    background-color: #403f3f;
+    border-color: #48566a;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.btn-primary {
+    background-color: #f8b700;
+    color: #211510;
+    font-weight: 700;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+    background: rgb(248 183 0 / 83%);
+    border: none;
+}

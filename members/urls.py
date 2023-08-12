@@ -9,7 +9,7 @@ urlpatterns = [
     # path('login',LoginView.as_view(), name="custom_login" ),
     # path('signup', SignupView.as_view(), name="custom_signup" ),
     # path('logout', LogoutView.as_view(), name="custom_logout" ),
-    path('<int:pk>', profile, name="view_profile"),
+    path('<int:pk>', UserProfileView, name="view_profile"),
     path('edit_profile/', UserEditView.as_view(), name="edit_profile"),
     # path('password/', auth_views.PasswordChangeView.as_view(template_name='members/change_password.html')),
     path('password/', PasswordChangeView.as_view(success_url=reverse_lazy('wow_members:password_success'),template_name='members/change_password.html'), name='change_password'),

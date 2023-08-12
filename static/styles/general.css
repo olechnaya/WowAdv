@@ -12,6 +12,7 @@
 
 body,html {
     color: #fff;
+    background: #000;
     font-weight: 400;
     font-family: 'Noto Sans', sans-serif;
     font-size: 16px;
@@ -83,14 +84,14 @@ main > .container {
     pointer-events: none;
 }
 
-.ads-section {
+.ads-section, .profile-section {
     display: block;
     position: relative;
     color: #ebdec2;
     line-height: 1.2em;
 }
 
-.ads-bg {
+.ads-bg, .profile-bg {
     position: absolute;
     top: 0;
     right: 0;
@@ -158,6 +159,11 @@ main > .container {
     color: #cacaca;
     text-shadow: 0 0 1px transparent, 0 1px 2px rgba(0,0,0,.8);
     font-weight: 400;
+}
+
+.card .edit a, 
+.card .delete a {
+    color:#fff;
 }
 
 .header-divider, .header-divider:after, .header-divider:before {
@@ -332,4 +338,27 @@ footer  {
     background-position: top;
     background-size: 100%;
     background-repeat: repeat;
+}
+
+body.adv-detail {
+    background: url("/static/img/subtle-bg.png") center 0px no-repeat,linear-gradient(90deg, #111217 0%, #15171e 30%, #15171e 70%, #111217 100%) center 0px repeat-y;
+    background-color: #111217;
+    color: #fff;
+}
+
+.btn-add-adv {
+    color: rgb(255, 255, 255);
+    background-color: rgb(170, 36, 9);
+}
+
+.adv-detail input, .adv-detail select {
+    background: #45a3bf1c;
+    border-color: #24657a78;
+    color: #fff;
+}
+
+.adv-detail .form-control:focus, .adv-detail select {
+    color: #fafafa;
+    background-color: #403f3f;
+    border-color: #48566a;
 }
